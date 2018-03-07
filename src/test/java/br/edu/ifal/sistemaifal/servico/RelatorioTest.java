@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import br.edu.ifal.sistemaifal.modelo.Aluno;
@@ -15,7 +16,7 @@ import br.edu.ifal.sistemaifal.modelo.Professor;
 public class RelatorioTest {
 
 	@Test
-	public void test() {
+	public void deveEntenderAsNotasEmOrdemCrescente() {
 		List<Aluno> alunos = new ArrayList<Aluno>();
 		Aluno ze = new Aluno(1, "2018A1", "Zé");
 		Aluno ana = new Aluno(2, "2018A2", "Ana");
@@ -30,19 +31,17 @@ public class RelatorioTest {
 		
 		List<Nota> notas = new ArrayList<Nota>();
 		notas.add(new Nota(1, ze, poo, 2.0));
-		notas.add(new Nota(1, ana, poo, 9.5));
+		notas.add(new Nota(1, ana, poo, 4.5));
 		notas.add(new Nota(1, joao, poo, 7.0));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
-		double maiorNotaEsperada = 9.5;
+		double maiorNotaEsperada = 7.0;
 		double menorNotaEsperada = 2.0;
 		
-		// imprimir 9.5
-		System.out.println(relatorio.getMaiorNota() == maiorNotaEsperada);
-		// imprimir 2.0
-		System.out.println(relatorio.getMenorNota() == menorNotaEsperada);
+		Assert.assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
+		Assert.assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
 	}
 
 }
