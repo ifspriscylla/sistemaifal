@@ -25,16 +25,16 @@ public class TesteDoRelatorio {
 		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
 		
 		List<Nota> notas = new ArrayList<Nota>();
-		notas.add(new Nota(1, ze, poo, 7.5));
+		notas.add(new Nota(1, ze, poo, 2.0));
 		notas.add(new Nota(1, ana, poo, 9.5));
-		notas.add(new Nota(1, joao, poo, 2.5));
+		notas.add(new Nota(1, joao, poo, 7.0));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
 		// imprimir 9.5
 		System.out.println(relatorio.getMaiorNota());
-		// imprimir 2.5
+		// imprimir 2.0
 		System.out.println(relatorio.getMenorNota());
 		
 	}
