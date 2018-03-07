@@ -34,6 +34,8 @@ public class TesteDoRelatorio {
 		
 		// imprimir 9.5
 		System.out.println(relatorio.getMaiorNota());
+		// imprimir 2.5
+		System.out.println(relatorio.getMenorNota());
 		
 	}
 
