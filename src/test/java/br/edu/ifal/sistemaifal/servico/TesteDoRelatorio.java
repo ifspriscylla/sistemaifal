@@ -32,10 +32,13 @@ public class TesteDoRelatorio {
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
+		double maiorNotaEsperada = 9.5;
+		double menorNotaEsperada = 2.0;
+		
 		// imprimir 9.5
-		System.out.println(relatorio.getMaiorNota());
+		System.out.println(relatorio.getMaiorNota() == maiorNotaEsperada);
 		// imprimir 2.0
-		System.out.println(relatorio.getMenorNota());
+		System.out.println(relatorio.getMenorNota() == menorNotaEsperada);
 		
 	}
 
