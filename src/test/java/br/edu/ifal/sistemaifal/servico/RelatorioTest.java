@@ -1,11 +1,9 @@
 package br.edu.ifal.sistemaifal.servico;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import br.edu.ifal.sistemaifal.modelo.Aluno;
@@ -40,8 +38,8 @@ public class RelatorioTest {
 		double maiorNotaEsperada = 7.0;
 		double menorNotaEsperada = 2.0;
 		
-		Assert.assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
-		Assert.assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
+		assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
+		assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
 	}
 	
 	@Test
