@@ -13,7 +13,8 @@ public class Relatorio {
 		for (Nota nota : notas) {
 			if(nota.getValor() > maiorNota){
 				maiorNota = nota.getValor();
-			} else if(nota.getValor() < menorNota){
+			}
+			if(nota.getValor() < menorNota){
 				menorNota = nota.getValor();
 			}
 		}
