@@ -1,21 +1,20 @@
 package br.edu.ifal.sistemaifal.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import br.edu.ifal.sistemaifal.modelo.Aluno;
+import br.edu.ifal.sistemaifal.modelo.Disciplina;
 
-public class AlunoDAO implements DAOInterface <Aluno, String>{
+public class DisciplinaDAO implements DAOInterface <Disciplina, String>{
 	
 	private final String PERSISTENCE_UNIT_NAME = "psunit1";
 	private EntityManagerFactory factory;
 	private EntityManager em;
 	
-	public AlunoDAO() {
+	public DisciplinaDAO() {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	}
 	
@@ -26,53 +25,43 @@ public class AlunoDAO implements DAOInterface <Aluno, String>{
 	
 	public void fecharConexao() {
 		em.getTransaction().commit();
-		em.close();	
-	}
-	
-
-	public void salvar(Aluno aluno) {
-		iniciarConexao();
-		em.persist(aluno);
-		fecharConexao();		
+		em.close();
 	}
 
-	public void atualizar(Aluno aluno) {
+	public void salvar(Disciplina disciplina) {
 		iniciarConexao();
-		em.merge(aluno);
+		em.persist(disciplina);
+		fecharConexao(); 
+	}
+
+	public void atualizar(Disciplina disciplina) {
+		iniciarConexao();
+		em.merge(disciplina);
 		fecharConexao();
-		
 	}
 
-	public Aluno buscarPorId(String id) {
+	public Disciplina buscarPorId(String id) {
 		iniciarConexao();
 		int identificador = Integer.parseInt(id);
-		Aluno aluno = em.find(Aluno.class, identificador);
+		Disciplina disciplina = em.find(Disciplina.class, identificador);
 		fecharConexao();
-		return aluno;
+		return disciplina;
 	}
 
-
-	public List<Aluno> buscarTodos() {
+	public void deletar(Disciplina disciplina) {
 		iniciarConexao();
-		List<Aluno> alunos = new ArrayList<Aluno>(); 
-		alunos.addAll(alunos);
-		
-		for (int i = 0; i < alunos.size(); i++) {
-			System.out.println(alunos.get(i));
-		}
- 		fecharConexao();
-		return alunos;
+		em.remove(disciplina);
+		fecharConexao();
 	}
-	
+
+	public List<Disciplina> buscarTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public void deletarTodos() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public void deletar(Aluno aluno) {
-		iniciarConexao();
-		em.remove(aluno);
-		fecharConexao();
 	}
 
 }

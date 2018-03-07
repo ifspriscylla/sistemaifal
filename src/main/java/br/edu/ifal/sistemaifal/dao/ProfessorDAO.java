@@ -1,21 +1,20 @@
 package br.edu.ifal.sistemaifal.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import br.edu.ifal.sistemaifal.modelo.Aluno;
+import br.edu.ifal.sistemaifal.modelo.Professor;
 
-public class AlunoDAO implements DAOInterface <Aluno, String>{
+public class ProfessorDAO implements DAOInterface <Professor, String>{
 	
 	private final String PERSISTENCE_UNIT_NAME = "psunit1";
 	private EntityManagerFactory factory;
 	private EntityManager em;
 	
-	public AlunoDAO() {
+	public ProfessorDAO() {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	}
 	
@@ -27,52 +26,42 @@ public class AlunoDAO implements DAOInterface <Aluno, String>{
 	public void fecharConexao() {
 		em.getTransaction().commit();
 		em.close();	
-	}
-	
+}
 
-	public void salvar(Aluno aluno) {
+	public void salvar(Professor professor) {
 		iniciarConexao();
-		em.persist(aluno);
-		fecharConexao();		
+		em.persist(professor);
+		fecharConexao(); 
 	}
 
-	public void atualizar(Aluno aluno) {
+	public void atualizar(Professor professor) {
 		iniciarConexao();
-		em.merge(aluno);
+		em.merge(professor);
 		fecharConexao();
-		
 	}
 
-	public Aluno buscarPorId(String id) {
+	public Professor buscarPorId(String id) {
 		iniciarConexao();
 		int identificador = Integer.parseInt(id);
-		Aluno aluno = em.find(Aluno.class, identificador);
+		Professor professor = em.find(Professor.class, identificador);
 		fecharConexao();
-		return aluno;
+		return professor;
 	}
 
-
-	public List<Aluno> buscarTodos() {
+	public void deletar(Professor professor) {
 		iniciarConexao();
-		List<Aluno> alunos = new ArrayList<Aluno>(); 
-		alunos.addAll(alunos);
-		
-		for (int i = 0; i < alunos.size(); i++) {
-			System.out.println(alunos.get(i));
-		}
- 		fecharConexao();
-		return alunos;
+		em.remove(professor);
+		fecharConexao(); 
 	}
-	
+
+	public List<Professor> buscarTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public void deletarTodos() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public void deletar(Aluno aluno) {
-		iniciarConexao();
-		em.remove(aluno);
-		fecharConexao();
 	}
 
 }

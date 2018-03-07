@@ -5,71 +5,80 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "aluno")
-public class Aluno {
-
+@Table(name ="professor")
+public class Professor {
+	
 	@Id
 	private int id;
-
-	@Column
-	private String matricula;
-
+	
 	@Column
 	private String nome;
-
-	@ManyToMany
+	
+	@Column
+	private String formacao;
+	
+	@OneToMany
 	private List<Disciplina> disciplinas;
-
-	public Aluno(int id, String matricula, String nome) {
+	
+	public Professor(int id, String nome, String formacao) {
 		super();
 		this.id = id;
-		this.matricula = matricula;
 		this.nome = nome;
+		this.formacao = formacao;
 	}
-
-	public Aluno() {
+	public Professor() {
 		super();
+		
 	}
-
+	
 	public int getId() {
 		return id;
 	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getMatricula() {
-		return matricula;
-	}
 
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
 
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
-		this.nome = nome;
+		if(nome != null) {
+			this.nome = nome;
+		}
 	}
-
+	public String getFormacao() {
+		return formacao;
+	}
+	
+	public void setFormacao(String formacao) {
+		if(formacao != null) {
+			this.formacao = formacao;
+		}
+	}
+	
+	
 	public List<Disciplina> getDisciplinas() {
 		return disciplinas;
 	}
+
 
 	public void setDisciplinas(List<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Aluno: id = " + id + ", matricula = " + matricula + ", nome = " + nome + ".";
+		return "Professor: nome = " + nome + ", formacao = " + formacao + ".";
 	}
-
+	
 }
