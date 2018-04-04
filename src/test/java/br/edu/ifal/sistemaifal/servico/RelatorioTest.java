@@ -23,23 +23,25 @@ public class RelatorioTest {
 		this.professor = new Professor(1, "Maria", "informática");
 		this.disciplina = new Disciplina(1, "POO", alunos, professor);
 		this.notas = new ArrayList<Nota>();
+		
+		Aluno ze = new Aluno(1, "2018A1", "Zé");
+		Aluno ana = new Aluno(2, "2018A2", "Ana");
+		Aluno joao = new Aluno(3, "2018A3", "João");
+		Aluno monica = new Aluno(2, "2018A2", "Monica");
+		this.alunos.add(ze);
+		this.alunos.add(ana);
+		this.alunos.add(joao);
+		this.alunos.add(monica);
 	}
 	
 	
 	@Test
 	public void deveFuncionarParaAsNotasNaOrdemAleatoria() {
 		criacaoDasEntidadesParaOsTestes();
-		
-		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		Aluno ana = new Aluno(2, "2018A2", "Ana");
-		Aluno joao = new Aluno(3, "2018A3", "João");
-		this.alunos.add(ze);
-		this.alunos.add(ana);
-		this.alunos.add(joao);
 				
-		this.notas.add(new Nota(1, ze, disciplina, 2.5));
-		this.notas.add(new Nota(2, ana, disciplina, 9.5));
-		this.notas.add(new Nota(3, joao, disciplina, 7.5));
+		this.notas.add(new Nota(1, alunos.get(0), disciplina, 2.5));
+		this.notas.add(new Nota(2, alunos.get(1), disciplina, 9.5));
+		this.notas.add(new Nota(3, alunos.get(2), disciplina, 7.5));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
@@ -54,17 +56,10 @@ public class RelatorioTest {
 	@Test
 	public void deveFuncionarParaAsNotasNaOrdemCrescente() {
 		criacaoDasEntidadesParaOsTestes();
-		
-		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		Aluno ana = new Aluno(2, "2018A2", "Ana");
-		Aluno joao = new Aluno(3, "2018A3", "João");
-		this.alunos.add(ze);
-		this.alunos.add(ana);
-		this.alunos.add(joao);
 				
-		notas.add(new Nota(1, ze, disciplina, 2.5));
-		notas.add(new Nota(2, ana, disciplina, 7.5));
-		notas.add(new Nota(3, joao, disciplina, 9.5));
+		notas.add(new Nota(1, alunos.get(0), disciplina, 2.5));
+		notas.add(new Nota(2, alunos.get(1), disciplina, 7.5));
+		notas.add(new Nota(3, alunos.get(2), disciplina, 9.5));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
@@ -81,17 +76,10 @@ public class RelatorioTest {
 	@Test
 	public void deveFuncionarParaAsNotasNaOrdemDecrescente() {
 		criacaoDasEntidadesParaOsTestes();
-		
-		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		Aluno ana = new Aluno(2, "2018A2", "Ana");
-		Aluno joao = new Aluno(3, "2018A3", "João");
-		this.alunos.add(ze);
-		this.alunos.add(ana);
-		this.alunos.add(joao);
 					
-		notas.add(new Nota(1, ze, disciplina, 9.5));
-		notas.add(new Nota(1, ana, disciplina, 7.5));
-		notas.add(new Nota(1, joao, disciplina, 2.5));
+		notas.add(new Nota(1, alunos.get(0), disciplina, 9.5));
+		notas.add(new Nota(1, alunos.get(1), disciplina, 7.5));
+		notas.add(new Nota(1, alunos.get(2), disciplina, 2.5));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
@@ -108,10 +96,7 @@ public class RelatorioTest {
 	public void deveFuncionarComUmaUnicaNota(){
 		criacaoDasEntidadesParaOsTestes();
 		
-		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		this.alunos.add(ze);
-		
-		this.notas.add(new Nota(1, ze, disciplina, 2.0));
+		this.notas.add(new Nota(1, alunos.get(0), disciplina, 2.0));
 
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
@@ -124,56 +109,13 @@ public class RelatorioTest {
 		
 	}
 	
-	
-	
-	@Test
-	public void deveFuncionarAIdentificacaoDas3MaioresNotas() {
-		List<Aluno> alunos = new ArrayList<>();
-		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		Aluno ana = new Aluno(2, "2018A2", "Ana");
-		Aluno joao = new Aluno(3, "2018A3", "João");
-		alunos.add(ze);
-		alunos.add(ana);
-		alunos.add(joao);
-		
-		Disciplina disciplina = new Disciplina(1, "poo", alunos, null);
-		List<Nota> notas = new ArrayList<>();
-		notas.add(new Nota(1, ze, disciplina, 9.5));
-		notas.add(new Nota(2, ana, disciplina, 7.5));
-		notas.add(new Nota(3, joao, disciplina, 2.5));
-		
-		Relatorio relatorio = new Relatorio();
-		relatorio.gerar(notas);
-		
-		int quantidadeDeNotasEsperadas = 3;
-		double primeiraNotaEsperada = 9.5;
-		double segundaNotaEsperada = 7.5;
-		double terceiraNotaEsperada = 2.5;
-		
-		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
-		assertEquals(primeiraNotaEsperada, relatorio.getTop3Notas().get(0).getValor(), 000.1);
-		assertEquals(segundaNotaEsperada, relatorio.getTop3Notas().get(1).getValor(), 000.1);
-		assertEquals(terceiraNotaEsperada, relatorio.getTop3Notas().get(2).getValor(), 000.1);
-		
-	}
-	
-	
-	
-	
-	/*
 	@Test
 	public void deveFuncionarAIdentificacaoDas3MaioresNotas() {
 		criacaoDasEntidadesParaOsTestes();
-		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		Aluno ana = new Aluno(2, "2018A2", "Ana");
-		Aluno joao = new Aluno(3, "2018A3", "João");
-		this.alunos.add(ze);
-		this.alunos.add(ana);
-		this.alunos.add(joao);
 		
-		notas.add(new Nota(1, ze, disciplina, 9.0));
-		notas.add(new Nota(1, ana, disciplina, 10.0));
-		notas.add(new Nota(1, joao, disciplina, 8.0));
+		notas.add(new Nota(1, alunos.get(0), disciplina, 9.0));
+		notas.add(new Nota(1, alunos.get(1), disciplina, 10.0));
+		notas.add(new Nota(1, alunos.get(2), disciplina, 8.0));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
@@ -193,15 +135,8 @@ public class RelatorioTest {
 	public void deveFuncionarParaIdentificarAs3MaioresNotasParaUmUnicoAluno() {
 		criacaoDasEntidadesParaOsTestes();
 		
-		List<Aluno> alunos = new ArrayList<Aluno>();
-		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		alunos.add(ze);
-		
-		Professor maria = new Professor(1, "Maria", "informÃ¡tica");
-		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
-		
 		List<Nota> notas = new ArrayList<Nota>();
-		notas.add(new Nota(1, ze, poo, 2.0));
+		notas.add(new Nota(1, alunos.get(0), disciplina, 2.0));
 
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
@@ -217,13 +152,8 @@ public class RelatorioTest {
 	
 	@Test
 	public void deveFuncionarParaIdentificarAs3MaioresNotasDeUmaTurmaSemAlunos() {
-		List<Aluno> alunos = new ArrayList<Aluno>();
+		criacaoDasEntidadesParaOsTestes();
 		
-		Professor maria = new Professor(1, "Maria", "informÃ¡tica");
-		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
-		
-		List<Nota> notas = new ArrayList<Nota>();
-
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
@@ -232,20 +162,50 @@ public class RelatorioTest {
 		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
 		
 	}
-	*/
 	
 	
+	@Test
+	public void deveFuncionarAIdentificacaoDas3MaioresNotasParaDoisAlunos() {
+		criacaoDasEntidadesParaOsTestes();
+
+		notas.add(new Nota(1, alunos.get(0), disciplina, 9.5));
+		notas.add(new Nota(2, alunos.get(1), disciplina, 7.5));
+		
+		Relatorio relatorio = new Relatorio();
+		relatorio.gerar(notas);
+		
+		int quantidadeDeNotasEsperadas = 2;
+		double primeiraNotaEsperada = 9.5;
+		double segundaNotaEsperada = 7.5;
+		
+		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
+		assertEquals(primeiraNotaEsperada, relatorio.getTop3Notas().get(0).getValor(), 000.1);
+		assertEquals(segundaNotaEsperada, relatorio.getTop3Notas().get(1).getValor(), 000.1);
+		
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test
+	public void deveFuncionarAIdentificacaoDas3MaioresNotasParaQuatroAlunos() {
+		criacaoDasEntidadesParaOsTestes();
+
+		notas.add(new Nota(1, alunos.get(0), disciplina, 9.5));
+		notas.add(new Nota(2, alunos.get(1), disciplina, 7.5));
+		notas.add(new Nota(2, alunos.get(2), disciplina, 6.5));
+		notas.add(new Nota(2, alunos.get(3), disciplina, 6.0));
+		
+		Relatorio relatorio = new Relatorio();
+		relatorio.gerar(notas);
+		
+		int quantidadeDeNotasEsperadas = 3;
+		double primeiraNotaEsperada = 9.5;
+		double segundaNotaEsperada = 7.5;
+		double terceiraNotaEsperada = 6.5;
+		
+		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
+		assertEquals(primeiraNotaEsperada, relatorio.getTop3Notas().get(0).getValor(), 000.1);
+		assertEquals(segundaNotaEsperada, relatorio.getTop3Notas().get(1).getValor(), 000.1);
+		assertEquals(terceiraNotaEsperada, relatorio.getTop3Notas().get(2).getValor(), 000.1);
+	}
 	
 	
 
