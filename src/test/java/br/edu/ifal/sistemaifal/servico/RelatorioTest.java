@@ -12,65 +12,123 @@ import br.edu.ifal.sistemaifal.modelo.Nota;
 import br.edu.ifal.sistemaifal.modelo.Professor;
 
 public class RelatorioTest {
-
+	
+	private List<Aluno> alunos;
+	private Disciplina disciplina;
+	private Professor professor;
+	private List<Nota> notas;
+	
+	public void criacaoDasEntidadesParaOsTestes() {
+		this.alunos = new ArrayList<Aluno>();
+		this.professor = new Professor(1, "Maria", "informática");
+		this.disciplina = new Disciplina(1, "POO", alunos, professor);
+		this.notas = new ArrayList<Nota>();
+	}
+	
+	
 	@Test
-	public void deveEntenderAsNotasEmOrdemCrescente() {
-		List<Aluno> alunos = new ArrayList<Aluno>();
+	public void deveFuncionarParaAsNotasNaOrdemAleatoria() {
+		criacaoDasEntidadesParaOsTestes();
+		
 		Aluno ze = new Aluno(1, "2018A1", "Zé");
 		Aluno ana = new Aluno(2, "2018A2", "Ana");
 		Aluno joao = new Aluno(3, "2018A3", "João");
-		alunos.add(ze);
-		alunos.add(ana);
-		alunos.add(joao);
-		
-		Professor maria = new Professor(1, "Maria", "informática");
-		
-		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
-		
-		List<Nota> notas = new ArrayList<Nota>();
-		notas.add(new Nota(1, ze, poo, 2.0));
-		notas.add(new Nota(1, ana, poo, 4.5));
-		notas.add(new Nota(1, joao, poo, 7.0));
+		this.alunos.add(ze);
+		this.alunos.add(ana);
+		this.alunos.add(joao);
+				
+		this.notas.add(new Nota(1, ze, disciplina, 2.5));
+		this.notas.add(new Nota(2, ana, disciplina, 9.5));
+		this.notas.add(new Nota(3, joao, disciplina, 7.5));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
-		double maiorNotaEsperada = 7.0;
-		double menorNotaEsperada = 2.0;
+		double maiorNotaEsperada = 9.5;
+		double menorNotaEsperada = 2.5;
 		
 		assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
 		assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
 	}
 	
 	@Test
-	public void deveEntenderUmUnicaNota(){
+	public void deveFuncionarParaAsNotasNaOrdemCrescente() {
+		criacaoDasEntidadesParaOsTestes();
 		
-		List<Aluno> alunos = new ArrayList<Aluno>();
 		Aluno ze = new Aluno(1, "2018A1", "Zé");
-		alunos.add(ze);
+		Aluno ana = new Aluno(2, "2018A2", "Ana");
+		Aluno joao = new Aluno(3, "2018A3", "João");
+		this.alunos.add(ze);
+		this.alunos.add(ana);
+		this.alunos.add(joao);
+				
+		notas.add(new Nota(1, ze, disciplina, 2.5));
+		notas.add(new Nota(2, ana, disciplina, 7.5));
+		notas.add(new Nota(3, joao, disciplina, 9.5));
 		
-		Professor maria = new Professor(1, "Maria", "informática");
+		Relatorio relatorio = new Relatorio();
+		relatorio.gerar(notas);
 		
-		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
+		double maiorNotaEsperada = 9.5;
+		double menorNotaEsperada = 2.5;
 		
-		List<Nota> notas = new ArrayList<Nota>();
-		notas.add(new Nota(1, ze, poo, 2.0));
+		assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
+		assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
+	
+	}
 
+	
+	@Test
+	public void deveFuncionarParaAsNotasNaOrdemDecrescente() {
+		criacaoDasEntidadesParaOsTestes();
 		
+		Aluno ze = new Aluno(1, "2018A1", "Zé");
+		Aluno ana = new Aluno(2, "2018A2", "Ana");
+		Aluno joao = new Aluno(3, "2018A3", "João");
+		this.alunos.add(ze);
+		this.alunos.add(ana);
+		this.alunos.add(joao);
+					
+		notas.add(new Nota(1, ze, disciplina, 9.5));
+		notas.add(new Nota(1, ana, disciplina, 7.5));
+		notas.add(new Nota(1, joao, disciplina, 2.5));
+		
+		Relatorio relatorio = new Relatorio();
+		relatorio.gerar(notas);
+		
+		double maiorNotaEsperada = 9.5;
+		double menorNotaEsperada = 2.5;
+		
+		assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0.001);
+		assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0.001);
+	}
+	
+	
+	@Test
+	public void deveFuncionarComUmaUnicaNota(){
+		criacaoDasEntidadesParaOsTestes();
+		
+		Aluno ze = new Aluno(1, "2018A1", "Zé");
+		this.alunos.add(ze);
+		
+		this.notas.add(new Nota(1, ze, disciplina, 2.0));
+
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
 		double maiorNotaEsperada = 2.0;
 		double menorNotaEsperada = 2.0;
 		
-		Assert.assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
-		Assert.assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
+		assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0.0001);
+		assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0.0001);
 		
 	}
 	
+	
+	
 	@Test
-	public void deveEntenderAsNotasEmOrdemDecrescente() {
-		List<Aluno> alunos = new ArrayList<Aluno>();
+	public void deveFuncionarAIdentificacaoDas3MaioresNotas() {
+		List<Aluno> alunos = new ArrayList<>();
 		Aluno ze = new Aluno(1, "2018A1", "Zé");
 		Aluno ana = new Aluno(2, "2018A2", "Ana");
 		Aluno joao = new Aluno(3, "2018A3", "João");
@@ -78,52 +136,117 @@ public class RelatorioTest {
 		alunos.add(ana);
 		alunos.add(joao);
 		
-		Professor maria = new Professor(1, "Maria", "informática");
-		
-		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
-		
-		List<Nota> notas = new ArrayList<Nota>();
-		notas.add(new Nota(1, ze, poo, 7.0));
-		notas.add(new Nota(1, ana, poo, 4.5));
-		notas.add(new Nota(1, joao, poo, 2.0));
+		Disciplina disciplina = new Disciplina(1, "poo", alunos, null);
+		List<Nota> notas = new ArrayList<>();
+		notas.add(new Nota(1, ze, disciplina, 9.5));
+		notas.add(new Nota(2, ana, disciplina, 7.5));
+		notas.add(new Nota(3, joao, disciplina, 2.5));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
-		double maiorNotaEsperada = 7.0;
-		double menorNotaEsperada = 2.0;
+		int quantidadeDeNotasEsperadas = 3;
+		double primeiraNotaEsperada = 9.5;
+		double segundaNotaEsperada = 7.5;
+		double terceiraNotaEsperada = 2.5;
 		
-		Assert.assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
-		Assert.assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
+		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
+		assertEquals(primeiraNotaEsperada, relatorio.getTop3Notas().get(0).getValor(), 000.1);
+		assertEquals(segundaNotaEsperada, relatorio.getTop3Notas().get(1).getValor(), 000.1);
+		assertEquals(terceiraNotaEsperada, relatorio.getTop3Notas().get(2).getValor(), 000.1);
+		
 	}
 	
+	
+	
+	
+	/*
 	@Test
-	public void deveEntenderAsNotasEmOrdemAleatoria() {
-		List<Aluno> alunos = new ArrayList<Aluno>();
+	public void deveFuncionarAIdentificacaoDas3MaioresNotas() {
+		criacaoDasEntidadesParaOsTestes();
 		Aluno ze = new Aluno(1, "2018A1", "Zé");
 		Aluno ana = new Aluno(2, "2018A2", "Ana");
 		Aluno joao = new Aluno(3, "2018A3", "João");
-		alunos.add(ze);
-		alunos.add(ana);
-		alunos.add(joao);
+		this.alunos.add(ze);
+		this.alunos.add(ana);
+		this.alunos.add(joao);
 		
-		Professor maria = new Professor(1, "Maria", "informática");
-		
-		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
-		
-		List<Nota> notas = new ArrayList<Nota>();
-		notas.add(new Nota(1, ze, poo, 4.5));
-		notas.add(new Nota(1, ana, poo, 2.0));
-		notas.add(new Nota(1, joao, poo, 7.0));
+		notas.add(new Nota(1, ze, disciplina, 9.0));
+		notas.add(new Nota(1, ana, disciplina, 10.0));
+		notas.add(new Nota(1, joao, disciplina, 8.0));
 		
 		Relatorio relatorio = new Relatorio();
 		relatorio.gerar(notas);
 		
-		double maiorNotaEsperada = 7.0;
-		double menorNotaEsperada = 2.0;
+		int quantidadeDeNotasEsperadas = 3;
+		double primeiraNotaEsperada = 10.0;
+		double segundaNotaEsperada = 9.0;
+		double terceiraNotaEsperada = 8.0;
 		
-		Assert.assertEquals(maiorNotaEsperada, relatorio.getMaiorNota(), 0000.1);
-		Assert.assertEquals(menorNotaEsperada, relatorio.getMenorNota(), 0000.1);
+		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
+		assertEquals(primeiraNotaEsperada, relatorio.getTop3Notas().get(0).getValor(), 0000.1);
+		assertEquals(segundaNotaEsperada, relatorio.getTop3Notas().get(1).getValor(), 0000.1);
+		assertEquals(terceiraNotaEsperada, relatorio.getTop3Notas().get(2).getValor(), 0000.1);
 	}
+	
+	@Test
+	public void deveFuncionarParaIdentificarAs3MaioresNotasParaUmUnicoAluno() {
+		criacaoDasEntidadesParaOsTestes();
+		
+		List<Aluno> alunos = new ArrayList<Aluno>();
+		Aluno ze = new Aluno(1, "2018A1", "Zé");
+		alunos.add(ze);
+		
+		Professor maria = new Professor(1, "Maria", "informÃ¡tica");
+		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
+		
+		List<Nota> notas = new ArrayList<Nota>();
+		notas.add(new Nota(1, ze, poo, 2.0));
+
+		Relatorio relatorio = new Relatorio();
+		relatorio.gerar(notas);
+		
+		int quantidadeDeNotasEsperadas = 1;
+		double primeiraNotaEsperada = 2.0;
+		
+		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
+		assertEquals(primeiraNotaEsperada, relatorio.getTop3Notas().get(0).getValor(), 0000.1);
+		
+		
+	}
+	
+	@Test
+	public void deveFuncionarParaIdentificarAs3MaioresNotasDeUmaTurmaSemAlunos() {
+		List<Aluno> alunos = new ArrayList<Aluno>();
+		
+		Professor maria = new Professor(1, "Maria", "informÃ¡tica");
+		Disciplina poo = new Disciplina(1, "POO", alunos, maria);
+		
+		List<Nota> notas = new ArrayList<Nota>();
+
+		Relatorio relatorio = new Relatorio();
+		relatorio.gerar(notas);
+		
+		int quantidadeDeNotasEsperadas = 0;
+		
+		assertEquals(quantidadeDeNotasEsperadas, relatorio.getTop3Notas().size());
+		
+	}
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
